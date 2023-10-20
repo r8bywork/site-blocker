@@ -6,9 +6,11 @@ import {
   HttpStatus,
   Post,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { Response } from 'express';
+import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { CookieService } from './cookie.service';
 import { GetSessionInfoDto, SignInBodyDto, SignUpBodyDto } from './dto';
@@ -50,12 +52,16 @@ export class AuthController {
   @Post('sign-out')
   @ApiOkResponse()
   @HttpCode(HttpStatus.OK)
-  signOut() {}
+  @UseGuards(AuthGuard)
+  signOut(@Res({ passthrough: true }) res: Response) {
+    this.cookieService.removeToken(res);
+  }
 
   @Get('session')
   @ApiOkResponse({
     type: GetSessionInfoDto,
   })
+  @UseGuards(AuthGuard)
   getSessionInfo() {
     return null;
   }
