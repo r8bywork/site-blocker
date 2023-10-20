@@ -14,6 +14,7 @@ import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { CookieService } from './cookie.service';
 import { GetSessionInfoDto, SignInBodyDto, SignUpBodyDto } from './dto';
+import { SessionInfo } from './session-info.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -62,7 +63,7 @@ export class AuthController {
     type: GetSessionInfoDto,
   })
   @UseGuards(AuthGuard)
-  getSessionInfo() {
-    return null;
+  getSessionInfo(@SessionInfo() session: GetSessionInfoDto) {
+    return session;
   }
 }

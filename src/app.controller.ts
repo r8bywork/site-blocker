@@ -3,11 +3,11 @@ import { ApiOkResponse, ApiProperty } from '@nestjs/swagger';
 
 import { AppService } from './app.service';
 import { DbService } from './db/db.service';
+
 class HelloWorldDto {
   @ApiProperty()
   message: string;
 }
-
 @Controller()
 export class AppController {
   constructor(
